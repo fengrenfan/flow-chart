@@ -1,7 +1,7 @@
 /*
  * @Author: feng
  * @Date: 2021-01-15 14:07:43
- * @LastEditTime: 2021-01-20 18:34:46
+ * @LastEditTime: 2021-01-21 10:17:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-flow-chart\src\main.js
@@ -12,13 +12,13 @@ import Vue from "vue";
 import App from "./App";
 import router from "./router";
 import store from "./store";
-import "@/components/Graph/css/index.scss";
-
+import flowChart from "./components/Graph/index";
+Vue.use(flowChart);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount("#app")
+  render: (h) => h(App)
+}).$mount("#app");

@@ -1,7 +1,13 @@
 {
   "name": "flow-chart",
   "version": "0.1.0",
-  "private": true,
+  "description": "An AntV/G6 based flowchart plug-in",
+  "author": "feng",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fengrenfan/flow-chart.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -79,7 +85,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-console": "off"
+    }
   },
   "browserslist": [
     "> 1%",

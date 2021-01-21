@@ -64,6 +64,7 @@ import registerFactory from "../Graph/js/graph";
 import ItemPanel from "./ItemPanel";
 import { mapGetters } from "vuex";
 export default {
+  name: "graph",
   components: {
     ItemPanel
   },
@@ -223,7 +224,7 @@ export default {
       let model = item.get("model");
       let datas = JSON.parse(JSON.stringify(this.data));
       if (datas.edges && datas.edges.length) {
-        datas.edges.forEach(el => {
+        datas.edges.forEach((el) => {
           if (el.id === model.id) {
             this.$confirm("此操作将永久该链接, 是否继续?", "提示", {
               confirmButtonText: "确定",
@@ -258,11 +259,11 @@ export default {
       let model = item.get("model");
       let datas = JSON.parse(JSON.stringify(this.data));
       if (datas.nodes && datas.nodes.length) {
-        datas.nodes.forEach(el => {
+        datas.nodes.forEach((el) => {
           if (el.id === model.id) {
             let data = JSON.parse(JSON.stringify(this.data));
             if (data.edges && data.edges.length) {
-              data.edges.forEach(e => {
+              data.edges.forEach((e) => {
                 if (e.source === model.id) {
                   this.$store.dispatch("app/_edgesDEL", e.source);
                 }
@@ -304,11 +305,11 @@ export default {
     },
     // 初始化图事件
     initGraphEvent() {
-      this.graph.on("on-canvas-dragend", e => {
+      this.graph.on("on-canvas-dragend", (e) => {
         this.canvasOffset.x = e.dx;
         this.canvasOffset.y = e.dy;
       });
-      this.graph.on("on-node-mouseenter", e => {
+      this.graph.on("on-node-mouseenter", (e) => {
         if (e && e.item) {
           // console.log(e.item.get("model"));
           // const model = e.item.get('model');
@@ -316,7 +317,7 @@ export default {
         }
       });
 
-      this.graph.on("after-node-selected", e => {
+      this.graph.on("after-node-selected", (e) => {
         this.configVisible = !!e;
         this.edgeconfigVisible = false;
         if (e && e.item) {
@@ -339,7 +340,7 @@ export default {
         }
       });
 
-      this.graph.on("after-edge-selected", e => {
+      this.graph.on("after-edge-selected", (e) => {
         this.edgeconfigVisible = !!e;
         this.configVisible = false;
         if (e && e.item) {
@@ -356,7 +357,7 @@ export default {
         }
       });
 
-      this.graph.on("on-edge-mousemove", e => {
+      this.graph.on("on-edge-mousemove", (e) => {
         if (e && e.item) {
           this.tooltip = e.item.get("model").label;
           this.left = e.clientX + 40;
@@ -369,7 +370,7 @@ export default {
         // let id = this.graph;
       });
 
-      this.graph.on("on-node-mousemove", e => {
+      this.graph.on("on-node-mousemove", (e) => {
         if (e && e.item) {
           this.tooltip = e.item.get("model").label;
           this.left = e.clientX + 40;
@@ -377,13 +378,13 @@ export default {
         }
       });
 
-      this.graph.on("on-node-mouseleave", e => {
+      this.graph.on("on-node-mouseleave", (e) => {
         if (e && e.item) {
           this.tooltip = "";
         }
       });
 
-      this.graph.on("on-edge-mouseleave", e => {
+      this.graph.on("on-edge-mouseleave", (e) => {
         if (e && e.item) {
           this.tooltip = "";
         }
@@ -445,7 +446,7 @@ export default {
       // if (obj.label !== "") {
       let arr = JSON.parse(JSON.stringify(this.data));
       if (arr.nodes && arr.nodes.length) {
-        arr.nodes.forEach(e => {
+        arr.nodes.forEach((e) => {
           if (e.id === this.config.id) {
             this.$store.dispatch("app/_nodesDEL", this.config.id);
           }
@@ -454,7 +455,6 @@ export default {
       obj.label = this.label;
       this.$store.dispatch("app/_nodesADD", Object.assign({}, obj));
       let graphData = JSON.parse(JSON.stringify(this.data));
-      console.log(graphData, "graphData");
       this.graph.read(graphData);
       this.configVisible = false;
       // } else {
@@ -463,7 +463,7 @@ export default {
     edgeSave() {
       let arr = JSON.parse(JSON.stringify(this.data));
       if (arr.edges && arr.edges.length) {
-        arr.edges.forEach(e => {
+        arr.edges.forEach((e) => {
           if (e.id === this.edge.id) {
             this.$store.dispatch("app/_edgesDEL", this.edge.id);
           }
@@ -476,12 +476,16 @@ export default {
       this.edgeconfigVisible = false;
       this.configVisible = false;
     },
-    saveAll() {}
+    saveAll() {
+      let graphData = JSON.parse(JSON.stringify(this.data));
+      this.$emit("saveAllData", graphData);
+    }
   }
 };
 </script>
 
 <style lang="scss">
+@import "@/components/Graph/css/index.scss";
 /* 提示框的样式 */
 .g6-tooltip {
   position: fixed;
