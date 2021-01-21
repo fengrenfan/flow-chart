@@ -1,4 +1,7 @@
 # flow-chart
+```
+An AntV/G6 based flowchart plug-in
+```
 
 ## Project setup
 ```
